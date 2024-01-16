@@ -1,0 +1,89 @@
+'use client'
+import Image from 'next/image';
+import { MouseEventHandler, SetStateAction, useEffect, useRef, useState } from 'react';
+import SignUpModal from '../authUi/SignUpModal';
+
+const UserProfile = ({ onClick } : {onClick : () => void}) => {
+    const [show, setShow] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const display = show ? '' : 'hidden';
+    const closeDropdown = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setShow(false);
+        }
+    };
+    useEffect(() => {
+        document.addEventListener('mousedown', closeDropdown);
+    
+        return () => {
+          document.removeEventListener('mousedown', closeDropdown);
+        };
+      }, []);
+
+    return (
+        <div className="relative inline-block">
+        <Image  
+            alt="Profile"
+            className = "p-1 rounded-full hover:bg-gray-400 transition-colors duration-500 cursor-pointer border-2 shadow-sm"
+            height="50"
+            width="50"
+            src="/images/profile.png"
+            onClick={() => setShow(!show)}
+        />
+        {setShow && <Dropdown display={display} setShow={setShow} onClick={()=>{
+            onClick();
+            setShow(false)
+        }}/>
+        }
+    </div>
+    )
+}
+
+const Dropdown = ({display, onClick, setShow}: {display: '' | 'hidden', onClick ?: MouseEventHandler<HTMLAnchorElement>, setShow: (value: SetStateAction<boolean>)=> void}) => {
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const closeDropdown = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            setShow(false);
+        }
+    };
+    useEffect(() => {
+        document.addEventListener('mousedown', closeDropdown);
+    
+        return () => {
+          document.removeEventListener('mousedown', closeDropdown);
+        };
+      }, []);
+    return (
+        <div className={`absolute ${display} mt-2 bg-white border border-gray-300 shadow-lg rounded-md w-40 right-4`} ref={dropdownRef}>
+            <div className="py-2">
+                <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={onClick}>Sign Up</a>
+                <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</a>
+            </div>
+        </div>
+    )
+}
+
+const Profile = () => {
+    const [showModal,setShowModal] = useState(false);
+    return (
+        <>
+            <div className="flex flex-row gap-1 py-3 items-center">
+                <div className='p-3 rounded-full hover:bg-gray-300 transition cursor-pointer'>
+                    Airbnb your home
+                </div>
+                <Image  
+                    alt="Logo"
+                    className = "p-1 rounded-full hover:bg-gray-300 transition cursor-pointer"
+                    height="30"
+                    width="30"
+                    src="/images/globe.png"
+                />
+                <UserProfile onClick={() => setShowModal(true)} />
+                {/* <SignUpModal setShowModal={ setShowModal } showModal={showModal} /> */}
+            </div>
+        </>
+
+    )
+}
+
+export default Profile;
