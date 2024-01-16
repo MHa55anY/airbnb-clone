@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import {Nunito} from 'next/font/google'
 import './globals.css'
 import Navbar from './components/navbar/Navbar'
-import Container from './components/Container'
 import ClientOnly from './components/ClientOnly'
-import LoginModal from './components/modals/LoginModal'
+import LoginModal from './components/modals/Modal'
+import Modal from './components/modals/Modal'
+import RegisterModal from './components/modals/RegisterModal'
 
 export const metadata: Metadata = {
   title: 'Airbnb',
@@ -25,17 +26,7 @@ export default function RootLayout({
       <body className={font.className}>
         <ClientOnly>
           {/* fill the props... TBD */}
-          <LoginModal isOpen title='Login Or Register'
-            body={
-              <div
-                className='text-sm'
-              >
-                Hello
-              </div>
-            }
-            actionLabel='Login'
-          
-          />
+          <RegisterModal />
           <Navbar />
         </ClientOnly>
           {/* {children} */}

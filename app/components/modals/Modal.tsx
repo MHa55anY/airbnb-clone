@@ -16,7 +16,7 @@ interface ModalProps {
     secondaryActionLabel?: string;
   }
 
-const LoginModal: FC<ModalProps> = ({
+const Modal: FC<ModalProps> = ({
     isOpen, 
     onClose, 
     onSubmit, 
@@ -29,9 +29,16 @@ const LoginModal: FC<ModalProps> = ({
     secondaryActionLabel
 }) => {
     const [showModal, setShowModal] = useState(isOpen);
+
+    useEffect(() => {
+      setShowModal(isOpen);
+    }, [isOpen]);
+    
     const handleClose = useCallback(() => {
-        if (disabled)
+        if (disabled) {
           return;
+        }
+      
         setShowModal(false);
         setTimeout(() => {
           onClose();
@@ -48,17 +55,12 @@ const LoginModal: FC<ModalProps> = ({
         if (disabled || !secondaryAction) {
           return;
         }
-    
         secondaryAction();
       }, [secondaryAction, disabled]);
     
       if (!isOpen) {
         return null;
       }
-
-    useEffect(() => {
-        setShowModal(isOpen);
-    }, [isOpen]);
 
     return (
         <>
@@ -117,4 +119,4 @@ const LoginModal: FC<ModalProps> = ({
     )
 }
 
-export default LoginModal
+export default Modal
