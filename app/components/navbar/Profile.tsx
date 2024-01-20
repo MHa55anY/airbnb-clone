@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { MouseEventHandler, SetStateAction, useEffect, useRef, useState } from 'react';
 import useRegisterModal from '../hooks/useRegisterModal';
+import useLoginModal from '../hooks/useLoginModal';
 
 const UserProfile = ({ onClick } : {onClick : () => void}) => {
     const [show, setShow] = useState(false);
@@ -37,6 +38,7 @@ const UserProfile = ({ onClick } : {onClick : () => void}) => {
 
 const Dropdown = ({display, setShow}: {display: '' | 'hidden', onClick ?: MouseEventHandler<HTMLAnchorElement>, setShow: (value: SetStateAction<boolean>)=> void}) => {
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
     const closeDropdown = (event: MouseEvent) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -54,7 +56,7 @@ const Dropdown = ({display, setShow}: {display: '' | 'hidden', onClick ?: MouseE
         <div className={`absolute ${display} mt-2 bg-white border border-gray-300 shadow-lg rounded-md w-40 right-4`} ref={dropdownRef}>
             <div className="py-2">
                 <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={registerModal.onOpen}>Sign Up</a>
-                <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</a>
+                <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={loginModal.onOpen}>Login</a>
             </div>
         </div>
     )
