@@ -33,7 +33,8 @@ const RegisterModal = () => {
     handleSubmit,
     formState: {
       errors,
-    },
+      dirtyFields
+    },reset
   } = useForm<FieldValues>({
     defaultValues: {
       name: '',
@@ -46,8 +47,10 @@ const RegisterModal = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/api/register', data)
+      await axios.post('/api/register', data)
       registerModal.onClose();
+      reset()
+      toast.success("You have sucessfully registered 😀!")
     }
     catch(e) {
       toast.error("Something went wrong!");
@@ -62,10 +65,12 @@ const RegisterModal = () => {
       <Input 
         id="email"
         label="Email"
+        type="email"
         disabled={isLoading} 
         formRegister={register}  
         errors={errors}
         required
+        isDirty={dirtyFields['email']}
       />
       <Input 
         id="name"
@@ -74,6 +79,7 @@ const RegisterModal = () => {
         formRegister={register}  
         errors={errors}
         required
+        isDirty={dirtyFields['name']}
       /> 
       <Input 
         id="password"
@@ -83,6 +89,7 @@ const RegisterModal = () => {
         formRegister={register}  
         errors={errors}
         required
+        isDirty={dirtyFields['password']}
       />     
     </div>
   )
