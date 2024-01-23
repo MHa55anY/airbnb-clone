@@ -35,7 +35,7 @@ const UserProfile: FC<ProfileProps> = ({currentUser}) => {
             className = "p-1 rounded-full hover:bg-gray-400 transition-colors duration-500 cursor-pointer border-2 shadow-sm"
             height="50"
             width="50"
-            src="/images/profile.png"
+            src={currentUser?.image ?? "/images/profile.png"}
             onClick={() => setShow(!show)}
         />
         {setShow && <Dropdown display={display} setShow={setShow} currentUser={currentUser}/>}

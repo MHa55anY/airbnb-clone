@@ -1,6 +1,5 @@
 'use client';
 
-import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 // import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
@@ -98,7 +97,7 @@ const LoginModal = () => {
         outline
         label='Continue with GitHub'
         icon={AiFillGithub}
-        onClick={()=>null}
+        onClick={()=>signIn("github")}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row items-center justify-center gap-2">
