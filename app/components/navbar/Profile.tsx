@@ -5,9 +5,10 @@ import useRegisterModal from '../hooks/useRegisterModal';
 import useLoginModal from '../hooks/useLoginModal';
 import { User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
+import { SafeUser } from '@/app/types';
 
 interface ProfileProps {
-    currentUser?: User | null;
+    currentUser?: SafeUser | null;
 }
 
 const UserProfile: FC<ProfileProps> = ({currentUser}) => {
@@ -42,7 +43,7 @@ const UserProfile: FC<ProfileProps> = ({currentUser}) => {
     )
 }
 
-const Dropdown = ({display, setShow, currentUser}: {display: '' | 'hidden', onClick ?: MouseEventHandler<HTMLAnchorElement>, setShow: (value: SetStateAction<boolean>)=> void, currentUser?: User | null}) => {
+const Dropdown = ({display, setShow, currentUser}: {display: '' | 'hidden', onClick ?: MouseEventHandler<HTMLAnchorElement>, setShow: (value: SetStateAction<boolean>)=> void, currentUser?: SafeUser | null}) => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
