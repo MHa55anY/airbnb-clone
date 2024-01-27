@@ -24,7 +24,7 @@ const Navbar: FC<NavbarProps> = ({ currentUser }) => {
               md:gap-0
           '>
               <Logo/>
-              <Search/>
+              <Search />
               <Profile currentUser={currentUser} />
             </div>
         </div>

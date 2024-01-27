@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image';
-import { FC, MouseEventHandler, SetStateAction, useEffect, useRef, useState } from 'react';
+import { FC, MouseEventHandler, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import useRegisterModal from '../hooks/useRegisterModal';
 import useLoginModal from '../hooks/useLoginModal';
 import { User } from '@prisma/client';
@@ -88,11 +88,16 @@ const Dropdown = ({display, setShow, currentUser}: {display: '' | 'hidden', onCl
 }
 
 const Profile: FC<ProfileProps> = ({currentUser}) => {
-    const [showModal,setShowModal] = useState(false);
+    const loginModal = useLoginModal();
+    const onRent = useCallback(() => {
+        if(!currentUser) return loginModal.onOpen();
+
+        //Open rent modal
+    },[currentUser, loginModal])
     return (
         <>
             <div className="flex flex-row gap-1 py-3 items-center">
-                <div className='p-3 rounded-full hover:bg-gray-300 transition cursor-pointer'>
+                <div className='p-3 rounded-full hover:bg-gray-300 transition cursor-pointer' onClick={onRent}>
                     Airbnb your home
                 </div>
                 <Image  
@@ -103,7 +108,6 @@ const Profile: FC<ProfileProps> = ({currentUser}) => {
                     src="/images/globe.png"
                 />
                 <UserProfile currentUser={currentUser} />
-                {/* <SignUpModal setShowModal={ setShowModal } showModal={showModal} /> */}
             </div>
         </>
 
