@@ -11,8 +11,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    // Add your project-specific ESLint rules here
-    // Example:
-    // 'no-console': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };
